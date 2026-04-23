@@ -3,259 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你係邊款幣圈人？— HashKey Pizza Personas</title>
-<meta name="description" content="5條問題。5款幣圈人格。你係邊個？">
-<meta property="og:title" content="你係邊款幣圈人？">
-<meta property="og:description" content="等跌黨？截圖選手？事後先知？撸毛黨？還是已覺醒者？">
+<title>Which Crypto Type Are You? — HashKey Pizza Personas</title>
+<meta name="description" content="5 questions. 5 crypto archetypes. Which one are you?">
+<meta property="og:title" content="Which Crypto Type Are You?">
+<meta property="og:description" content="DIP Waiter? P&L Exhibitionist? Retroactive Prophet? Airdrop Farmer? The Reclaimed?">
 <meta property="og:image" content="https://beltran12138.github.io/hkx/quiz/og.png">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #0E0C0B;
-    --bg2: #181614;
-    --pink: #FF2D78;
-    --cyan: #00D4FF;
-    --orange: #FF4500;
-    --white: #F5F3F0;
-    --dim: #6B6560;
-    --border: #2A2522;
+    --bg: #0E0C0B; --bg2: #181614;
+    --pink: #FF2D78; --cyan: #00D4FF; --orange: #FF4500;
+    --white: #F5F3F0; --dim: #6B6560; --border: #2A2522;
   }
-
   html, body {
-    background: var(--bg);
-    color: var(--white);
+    background: var(--bg); color: var(--white);
     font-family: -apple-system, "PingFang HK", "Noto Sans HK", sans-serif;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    min-height: 100dvh; display: flex; flex-direction: column; align-items: center;
   }
+  .wrap { width: 100%; max-width: 480px; padding: 24px 20px 48px; }
 
-  .wrap {
-    width: 100%;
-    max-width: 480px;
-    padding: 24px 20px 48px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  /* ── Lang toggle ── */
+  .lang-bar {
+    display: flex; justify-content: flex-end;
+    padding: 12px 0 4px;
   }
+  .lang-btn {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 100px; padding: 5px 14px;
+    font-size: 12px; color: var(--dim); cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .lang-btn:hover { border-color: var(--pink); color: var(--white); }
 
   /* ── Header ── */
-  .header {
-    text-align: center;
-    padding: 32px 0 24px;
-  }
-  .header .eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--dim);
-    text-transform: uppercase;
-    margin-bottom: 10px;
+  .header { text-align: center; padding: 20px 0 24px; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.15em;
+    color: var(--dim); text-transform: uppercase; margin-bottom: 10px;
   }
   .header h1 {
-    font-size: clamp(22px, 6vw, 28px);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--white);
+    font-size: clamp(22px, 6vw, 28px); font-weight: 700;
+    line-height: 1.2; color: var(--white);
   }
   .header h1 span { color: var(--pink); }
-  .header .sub {
-    font-size: 13px;
-    color: var(--dim);
-    margin-top: 10px;
-  }
+  .header .sub { font-size: 13px; color: var(--dim); margin-top: 10px; }
 
   /* ── Progress ── */
-  .progress {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin: 20px 0 28px;
-  }
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    transition: background 0.3s;
-  }
+  .progress { display: flex; justify-content: center; gap: 6px; margin: 20px 0 28px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.3s; }
   .dot.active { background: var(--pink); }
   .dot.done { background: var(--dim); }
 
   /* ── Question card ── */
   .q-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px 20px;
-    display: none;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px 20px; display: none;
   }
   .q-card.visible { display: block; }
-  .q-num {
-    font-size: 11px;
-    color: var(--pink);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .q-text {
-    font-size: clamp(16px, 4.5vw, 19px);
-    font-weight: 600;
-    line-height: 1.4;
-    margin-bottom: 20px;
-  }
-
-  /* ── Options ── */
+  .q-num { font-size: 11px; color: var(--pink); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .q-text { font-size: clamp(15px, 4.5vw, 18px); font-weight: 600; line-height: 1.4; margin-bottom: 20px; }
   .options { display: flex; flex-direction: column; gap: 10px; }
   .opt {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    text-align: left;
-    color: var(--white);
-    font-size: 14px;
-    line-height: 1.4;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px; text-align: left; color: var(--white); font-size: 14px;
+    line-height: 1.4; cursor: pointer; transition: border-color 0.2s, background 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
-  .opt:hover, .opt:focus {
-    border-color: var(--pink);
-    background: #1A1210;
-    outline: none;
-  }
+  .opt:hover, .opt:focus { border-color: var(--pink); background: #1A1210; outline: none; }
   .opt:active { background: #200F0F; }
 
-  /* ── Result card ── */
+  /* ── Result ── */
   #result { display: none; }
   #result.visible { display: block; }
-
   .result-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px 24px 28px;
-    text-align: center;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px 24px 28px; text-align: center;
   }
-  .pizza-emoji {
-    font-size: 56px;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .result-label {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--dim);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .result-name {
-    font-size: clamp(24px, 7vw, 32px);
-    font-weight: 800;
-    color: var(--pink);
-    line-height: 1.1;
-    margin-bottom: 4px;
-  }
-  .result-en {
-    font-size: 12px;
-    color: var(--dim);
-    letter-spacing: 0.08em;
-    margin-bottom: 20px;
-  }
+  .pizza-emoji { font-size: 56px; margin-bottom: 16px; display: block; }
+  .result-label { font-size: 11px; letter-spacing: 0.15em; color: var(--dim); text-transform: uppercase; margin-bottom: 6px; }
+  .result-name { font-size: clamp(22px, 7vw, 30px); font-weight: 800; color: var(--pink); line-height: 1.1; margin-bottom: 4px; }
+  .result-en { font-size: 12px; color: var(--dim); letter-spacing: 0.08em; margin-bottom: 20px; }
   .result-quote {
-    background: var(--bg);
-    border-left: 3px solid var(--pink);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 16px;
-    text-align: left;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--white);
-    margin-bottom: 16px;
-    font-style: italic;
+    background: var(--bg); border-left: 3px solid var(--pink);
+    border-radius: 0 8px 8px 0; padding: 14px 16px; text-align: left;
+    font-size: 14px; line-height: 1.6; color: var(--white);
+    margin-bottom: 16px; font-style: italic; white-space: pre-line;
   }
-  .result-desc {
-    font-size: 13px;
-    color: var(--dim);
-    line-height: 1.6;
-    margin-bottom: 24px;
-  }
-  .result-punchline {
-    font-size: 13px;
-    color: var(--cyan);
-    font-weight: 600;
-    margin-bottom: 24px;
-  }
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0 0 20px;
-  }
-  .result-tag {
-    font-size: 11px;
-    color: var(--dim);
-    margin-bottom: 20px;
-  }
+  .result-desc { font-size: 13px; color: var(--dim); line-height: 1.6; margin-bottom: 16px; }
+  .result-punchline { font-size: 13px; color: var(--cyan); font-weight: 600; margin-bottom: 24px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 0 20px; }
+  .result-tag { font-size: 11px; color: var(--dim); margin-bottom: 20px; }
   .result-tag span { color: var(--pink); }
 
-  /* ── Buttons ── */
-  .btn-row {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-  }
+  .btn-row { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
   .btn-share {
-    background: var(--pink);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.2s;
+    background: var(--pink); color: #fff; border: none; border-radius: 12px;
+    padding: 16px; font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;
   }
   .btn-share:hover { opacity: 0.85; }
   .btn-restart {
-    background: transparent;
-    color: var(--dim);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    font-size: 14px;
-    cursor: pointer;
+    background: transparent; color: var(--dim); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px; font-size: 14px; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
   }
   .btn-restart:hover { border-color: var(--dim); color: var(--white); }
 
-  /* ── Footer ── */
-  .footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 11px;
-    color: var(--dim);
-    line-height: 1.8;
-  }
+  .footer { margin-top: 40px; text-align: center; font-size: 11px; color: var(--dim); line-height: 1.8; }
   .footer a { color: var(--dim); text-decoration: none; }
   .footer a:hover { color: var(--cyan); }
 
-  /* ── Toast ── */
   .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
+    position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(80px);
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 10px 20px;
-    font-size: 13px;
-    color: var(--white);
-    transition: transform 0.3s;
-    z-index: 999;
-    white-space: nowrap;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 100px; padding: 10px 20px; font-size: 13px;
+    color: var(--white); transition: transform 0.3s; z-index: 999; white-space: nowrap;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
@@ -263,11 +126,16 @@
 <body>
 <div class="wrap">
 
+  <!-- Lang toggle -->
+  <div class="lang-bar">
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()">EN</button>
+  </div>
+
   <!-- Header -->
   <div class="header" id="headerBlock">
-    <div class="eyebrow">Bitcoin Pizza Day 2026 · HashKey Exchange</div>
-    <h1>你係<span>邊款</span>幣圈人？</h1>
-    <p class="sub">5條問題。5款人格。你唔係唔同意就係好笑。</p>
+    <div class="eyebrow" id="hEyebrow">Bitcoin Pizza Day 2026 · HashKey Exchange</div>
+    <h1 id="hTitle">你係<span>邊款</span>幣圈人？</h1>
+    <p class="sub" id="hSub">5條問題。5款人格。你唔係唔同意就係好笑。</p>
   </div>
 
   <!-- Progress -->
@@ -279,89 +147,27 @@
     <div class="dot" id="d4"></div>
   </div>
 
-  <!-- Questions -->
-  <div id="questions">
-
-    <div class="q-card" id="q0">
-      <div class="q-num">問題 1 / 5</div>
-      <div class="q-text">BTC今日跌咗20%。你第一反應係？</div>
-      <div class="options">
-        <button class="opt" onclick="answer(0,0)">終於！再等多10%先入。唔急。</button>
-        <button class="opt" onclick="answer(0,1)">截圖。跌嘅截圖唔係我發㗎。</button>
-        <button class="opt" onclick="answer(0,2)">我上個月就話會跌。有記錄。</button>
-        <button class="opt" onclick="answer(0,3)">關我事？我撸緊毛。</button>
-        <button class="opt" onclick="answer(0,4)">先確認一下我用緊嘅交易所係SFC持牌㗎咋。</button>
-      </div>
-    </div>
-
-    <div class="q-card" id="q1">
-      <div class="q-num">問題 2 / 5</div>
-      <div class="q-text">你推特上面最常post咩？</div>
-      <div class="options">
-        <button class="opt" onclick="answer(1,0)">「等緊，未係時候。」</button>
-        <button class="opt" onclick="answer(1,1)">盈利截圖。（只係好消息嗰種）</button>
-        <button class="opt" onclick="answer(1,2)">事後分析。精準命中。有圖有真相。</button>
-        <button class="opt" onclick="answer(1,3)">空投教程、交互指南、又一個新Protocol。</button>
-        <button class="opt" onclick="answer(1,4)">警告某個無牌交易所。我試過㗎。</button>
-      </div>
-    </div>
-
-    <div class="q-card" id="q2">
-      <div class="q-num">問題 3 / 5</div>
-      <div class="q-text">朋友問你推薦邊間交易所，你話？</div>
-      <div class="options">
-        <button class="opt" onclick="answer(2,0)">等多陣先開戶，個市唔穩定，唔急。</button>
-        <button class="opt" onclick="answer(2,1)">介紹完順便附上我嘅推薦碼。</button>
-        <button class="opt" onclick="answer(2,2)">我早就唔用嗰間㗎，我早知㗎。</button>
-        <button class="opt" onclick="answer(2,3)">先問有無空投再話。</button>
-        <button class="opt" onclick="answer(2,4)">你問咗佢有無SFC牌照未先？去問清楚。</button>
-      </div>
-    </div>
-
-    <div class="q-card" id="q3">
-      <div class="q-num">問題 4 / 5</div>
-      <div class="q-text">你入幣圈以嚟最痛嘅一次係？</div>
-      <div class="options">
-        <button class="opt" onclick="answer(3,0)">等到ATH先FOMO入，即刻跌五成。</button>
-        <button class="opt" onclick="answer(3,1)">有次輸咗唔少。（帖已刪除，唔記得咗）</button>
-        <button class="opt" onclick="answer(3,2)">我明明係對嘅，timing差少少咋。</button>
-        <button class="opt" onclick="answer(3,3)">Gas費比空投多咗 $200。我計過。</button>
-        <button class="opt" onclick="answer(3,4)">信過人。交過學費。唔再提。</button>
-      </div>
-    </div>
-
-    <div class="q-card" id="q4">
-      <div class="q-num">問題 5 / 5</div>
-      <div class="q-text">Bitcoin Pizza Day 22 May，你打算點過？</div>
-      <div class="options">
-        <button class="opt" onclick="answer(4,0)">等pizza平少少先去，唔係最佳時機。</button>
-        <button class="opt" onclick="answer(4,1)">去完要影相發。要截圖。</button>
-        <button class="opt" onclick="answer(4,2)">我早就話5月22日係大日子，你哋而家先知。</button>
-        <button class="opt" onclick="answer(4,3)">空投！10,001個！我一定要攞到！幾個錢包都得！</button>
-        <button class="opt" onclick="answer(4,4)">HashKey係SFC持牌交易所。我放心去。</button>
-      </div>
-    </div>
-
-  </div><!-- /questions -->
+  <!-- Questions (rendered by JS) -->
+  <div id="questions"></div>
 
   <!-- Result -->
   <div id="result">
-    <div class="result-card" id="resultCard">
+    <div class="result-card">
       <span class="pizza-emoji" id="rEmoji"></span>
-      <div class="result-label">你係</div>
+      <div class="result-label" id="rLabel">你係</div>
       <div class="result-name" id="rName"></div>
       <div class="result-en" id="rEn"></div>
       <div class="result-quote" id="rQuote"></div>
       <div class="result-desc" id="rDesc"></div>
       <div class="result-punchline" id="rPunch"></div>
       <hr class="divider">
-      <div class="result-tag">
+      <div class="result-tag" id="rTag">
         <span>#你係邊款幣圈人</span> &nbsp;·&nbsp; hashkey.com/pizza &nbsp;·&nbsp; 22.05.2026
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-share" onclick="shareResult()">分享結果 / Share</button>
-      <button class="btn-restart" onclick="restart()">重新測試</button>
+      <button class="btn-share" id="btnShare" onclick="shareResult()">分享結果</button>
+      <button class="btn-restart" id="btnRestart" onclick="restart()">重新測試</button>
     </div>
   </div>
 
@@ -371,71 +177,193 @@
     <a href="https://hashkey.com" target="_blank">hashkey.com</a>
     <br>Compliance Can Be Punk. &nbsp;SFC Licensed Exchange.
   </div>
+</div>
 
-</div><!-- /wrap -->
-
-<div class="toast" id="toast">已複製到剪貼板！</div>
+<div class="toast" id="toast"></div>
 
 <script>
-const PERSONAS = [
-  {
-    emoji: "🍕",
-    name: "等跌黨",
-    en: "THE DIP WAITER",
-    quote: "「BTC跌番兩萬我先入。唔急。」\n——你，BTC $78,000嗰時",
-    desc: "每個cycle都係等等等。等到ATH先FOMO入，然後話「我早知唔應該等咁耐」。下個cycle再等。",
-    punch: "你係唔係而家都仲喺度等？",
-    shareText: "我係等跌黨 🍕 BTC $78,000我話等兩萬先入。你係邊款幣圈人？"
+// ── i18n strings ────────────────────────────────────────────────
+const STRINGS = {
+  zh: {
+    langBtn: "EN",
+    eyebrow: "Bitcoin Pizza Day 2026 · HashKey Exchange",
+    title: '你係<span style="color:var(--pink)">邊款</span>幣圈人？',
+    sub: "5條問題。5款人格。你唔係唔同意就係好笑。",
+    resultLabel: "你係",
+    shareBtn: "分享結果",
+    restartBtn: "重新測試",
+    toastMsg: "已複製到剪貼板！",
+    shareTitle: "你係邊款幣圈人？",
+    resultTag: '<span>#你係邊款幣圈人</span> &nbsp;·&nbsp; hashkey.com/pizza &nbsp;·&nbsp; 22.05.2026',
+    qNum: ["問題 1 / 5","問題 2 / 5","問題 3 / 5","問題 4 / 5","問題 5 / 5"],
+    questions: [
+      "BTC今日跌咗20%。你第一反應係？",
+      "你推特上面最常post咩？",
+      "朋友問你推薦邊間交易所，你話？",
+      "你入幣圈以嚟最痛嘅一次係？",
+      "Bitcoin Pizza Day 22 May，你打算點過？"
+    ],
+    options: [
+      ["終於！再等多10%先入。唔急。","截圖。跌嘅截圖唔係我發㗎。","我上個月就話會跌。有記錄。","關我事？我撸緊毛。","先確認一下我用緊嘅交易所係SFC持牌㗎咋。"],
+      ["「等緊，未係時候。」","盈利截圖。（只係好消息嗰種）","事後分析。精準命中。有圖有真相。","空投教程、交互指南、又一個新Protocol。","警告某個無牌交易所。我試過㗎。"],
+      ["等多陣先開戶，個市唔穩定，唔急。","介紹完順便附上我嘅推薦碼。","我早就唔用嗰間㗎，我早知㗎。","先問有無空投再話。","你問咗佢有無SFC牌照未先？去問清楚。"],
+      ["等到ATH先FOMO入，即刻跌五成。","有次輸咗唔少。（帖已刪除，唔記得咗）","我明明係對嘅，timing差少少咋。","Gas費比空投多咗 $200。我計過。","信過人。交過學費。唔再提。"],
+      ["等pizza平少少先去，唔係最佳時機。","去完要影相發。要截圖。","我早就話5月22日係大日子，你哋而家先知。","空投！10,001個！我一定要攞到！幾個錢包都得！","HashKey係SFC持牌交易所。我放心去。"]
+    ]
   },
-  {
-    emoji: "📸",
-    name: "截圖選手",
-    en: "P&L EXHIBITIONIST",
-    quote: "推特：+340% 🚀🚀🚀\n實際：[已刪除]",
-    desc: "從不發-80%截圖。從不提Gas費。從不提那個「只係試下」嘅100倍槓桿倉。",
-    punch: "你係唔係從來唔發虧損截圖？",
-    shareText: "我係截圖選手 📸 推特永遠牛市，實際另一回事。你係邊款幣圈人？"
-  },
-  {
-    emoji: "🔮",
-    name: "事後先知",
-    en: "RETROACTIVE PROPHET",
-    quote: "「我年頭就話SOL會漲。」\n（無記錄。但係真嘅。）",
-    desc: "完美預測記錄。全部係事後先開口。每次大升大跌之後必然出現，從不預告，只有馬後炮。",
-    punch: "你係唔係永遠係事後先開口？",
-    shareText: "我係事後先知 🔮 我早就話會咁。你係邊款幣圈人？"
-  },
-  {
-    emoji: "⛏️",
-    name: "撸毛黨",
-    en: "AIRDROP FARMER",
-    quote: "「我有47個錢包。\n上週Gas費: $340\n空投到手: $280\n利潤: 我唔計㗎。」",
-    desc: "把空投當正職。Excel表格有52個tabs。每日凌晨三點睇gas費。從不承認總體虧損。",
-    punch: "你係唔係仲喺撸緊毛？",
-    shareText: "我係撸毛黨 ⛏️ 47個錢包，每個Protocol都有交互。你係邊款幣圈人？"
-  },
-  {
-    emoji: "🍍",
-    name: "已覺醒者",
-    en: "THE RECLAIMED",
-    quote: "「FTX冇SFC牌照。\nHashKey有。\n我知我以前係咩立場。\n我錯咗。」",
-    desc: "曾經係最大聲話合規無用嗰個。交過學費之後，而家係最大聲問「有無SFC牌照」嗰個。",
-    punch: "你終於係Hawaiian咗。歡迎。",
-    shareText: "我係已覺醒者 🍍 FTX冇SFC牌照，HashKey有。我知我以前係咩立場。你係邊款幣圈人？"
+  en: {
+    langBtn: "中文",
+    eyebrow: "Bitcoin Pizza Day 2026 · HashKey Exchange",
+    title: 'Which <span style="color:var(--pink)">Crypto Type</span> Are You?',
+    sub: "5 questions. 5 archetypes. Disagree? That's also an answer.",
+    resultLabel: "You are",
+    shareBtn: "Share Result",
+    restartBtn: "Retake Quiz",
+    toastMsg: "Copied to clipboard!",
+    shareTitle: "Which Crypto Type Are You?",
+    resultTag: '<span>#CryptoPersona</span> &nbsp;·&nbsp; hashkey.com/pizza &nbsp;·&nbsp; 22.05.2026',
+    qNum: ["Q 1 / 5","Q 2 / 5","Q 3 / 5","Q 4 / 5","Q 5 / 5"],
+    questions: [
+      "BTC drops 20% today. Your first reaction?",
+      "What do you post most on Twitter/X?",
+      "A friend asks you to recommend an exchange. You say?",
+      "Your most painful moment in crypto?",
+      "Bitcoin Pizza Day is May 22nd. Your plan?"
+    ],
+    options: [
+      ["Finally! I'll wait for another 10% dip. No rush.","Screenshot. I don't post when it drops.","I said this would happen last month. There's a record.","Not my problem. I'm farming airdrops.","First, let me verify my exchange has an SFC licence."],
+      ["\"Still waiting. Not the right time yet.\"","P&L screenshots. The positive ones only.","Post-event analysis. Called it perfectly. With proof.","Airdrop guides, protocol interaction tutorials, new launches.","Warning people about an unlicensed exchange. I learned the hard way."],
+      ["Wait a bit before opening an account. Market's unstable.","Recommend it — and attach my referral code.","I stopped using that exchange long ago. I knew.","Ask if there's an airdrop first.","Ask whether they have an SFC licence first."],
+      ["FOMO'd in at ATH. Dropped 50% the next day.","Lost quite a bit once. Post deleted. Can't remember.","I was right, the timing was just slightly off.","Gas fees exceeded the airdrop by $200. I calculated it.","Trusted someone. Paid tuition. Not talking about it."],
+      ["Wait for cheaper pizza. Not the optimal entry.","Must take photos. Must screenshot.","I said May 22nd was important. You all know now.","Airdrop! 10,001 slices! I'll get mine. Multiple wallets if needed!","HashKey is SFC-licensed. I'll go without hesitation."]
+    ]
   }
-];
+};
 
-let scores = [0, 0, 0, 0, 0];
+// ── Personas ────────────────────────────────────────────────────
+const PERSONAS = {
+  zh: [
+    { emoji:"🍕", name:"等跌黨", en:"THE DIP WAITER",
+      quote:"「BTC跌番兩萬我先入。唔急。」\n——你，BTC $78,000嗰時",
+      desc:"每個cycle都係等等等。等到ATH先FOMO入，然後話「我早知唔應該等咁耐」。下個cycle再等。",
+      punch:"你係唔係而家都仲喺度等？",
+      shareText:"我係等跌黨 🍕 BTC $78,000我話等兩萬先入。你係邊款幣圈人？" },
+    { emoji:"📸", name:"截圖選手", en:"P&L EXHIBITIONIST",
+      quote:"推特：+340% 🚀🚀🚀\n實際：[已刪除]",
+      desc:"從不發-80%截圖。從不提Gas費。從不提那個「只係試下」嘅100倍槓桿倉。",
+      punch:"你係唔係從來唔發虧損截圖？",
+      shareText:"我係截圖選手 📸 推特永遠牛市，實際另一回事。你係邊款幣圈人？" },
+    { emoji:"🔮", name:"事後先知", en:"RETROACTIVE PROPHET",
+      quote:"「我年頭就話SOL會漲。」\n（無記錄。但係真嘅。）",
+      desc:"完美預測記錄。全部係事後先開口。每次大升大跌之後必然出現，從不預告，只有馬後炮。",
+      punch:"你係唔係永遠係事後先開口？",
+      shareText:"我係事後先知 🔮 我早就話會咁。你係邊款幣圈人？" },
+    { emoji:"⛏️", name:"撸毛黨", en:"AIRDROP FARMER",
+      quote:"「我有47個錢包。\n上週Gas費: $340\n空投到手: $280\n利潤: 我唔計㗎。」",
+      desc:"把空投當正職。Excel表格有52個tabs。每日凌晨三點睇gas費。從不承認總體虧損。",
+      punch:"你係唔係仲喺撸緊毛？",
+      shareText:"我係撸毛黨 ⛏️ 47個錢包，每個Protocol都有交互。你係邊款幣圈人？" },
+    { emoji:"🍍", name:"已覺醒者", en:"THE RECLAIMED",
+      quote:"「FTX冇SFC牌照。\nHashKey有。\n我知我以前係咩立場。\n我錯咗。」",
+      desc:"曾經係最大聲話合規無用嗰個。交過學費之後，而家係最大聲問「有無SFC牌照」嗰個。",
+      punch:"你終於係Hawaiian咗。歡迎。",
+      shareText:"我係已覺醒者 🍍 FTX冇SFC牌照，HashKey有。我知我以前係咩立場。你係邊款幣圈人？" }
+  ],
+  en: [
+    { emoji:"🍕", name:"The DIP Waiter", en:"THE DIP WAITER",
+      quote:"\"I'll buy when BTC drops back to $20K. No rush.\"\n— You. When BTC was $78,000.",
+      desc:"Every cycle: wait, wait, wait. Eventually FOMO in at ATH. Then say \"I knew I shouldn't have waited so long.\" Repeat next cycle.",
+      punch:"Are you still waiting right now?",
+      shareText:"I'm a DIP Waiter 🍕 \"I'll wait for $20K\" — when BTC was $78K. Which crypto type are you?" },
+    { emoji:"📸", name:"The P&L Exhibitionist", en:"P&L EXHIBITIONIST",
+      quote:"Twitter: +340% 🚀🚀🚀\nActual portfolio: [post deleted]",
+      desc:"Never posts -80% screenshots. Never mentions gas fees. Never mentions that \"just testing\" 100x leverage position.",
+      punch:"Do you ever post your losing trades?",
+      shareText:"I'm a P&L Exhibitionist 📸 Twitter always bull market. Reality: another story. Which crypto type are you?" },
+    { emoji:"🔮", name:"The Retroactive Prophet", en:"RETROACTIVE PROPHET",
+      quote:"\"I said SOL would pump back in January.\"\n(No record exists. But it's true.)",
+      desc:"Perfect prediction track record. All delivered after the fact. Appears after every major move. Never a forecast, always a post-mortem.",
+      punch:"Do you always speak up after it happens?",
+      shareText:"I'm a Retroactive Prophet 🔮 \"I called it.\" (No timestamp.) Which crypto type are you?" },
+    { emoji:"⛏️", name:"The Airdrop Farmer", en:"AIRDROP FARMER",
+      quote:"\"I have 47 wallets.\nLast week: Gas fees $340\nAirdrop received: $280\nProfit: I don't do that math.\"",
+      desc:"Treats airdrop farming as a full-time job. Excel has 52 tabs. Checks gas fees at 3am. Never acknowledges net losses.",
+      punch:"Are you still farming right now?",
+      shareText:"I'm an Airdrop Farmer ⛏️ 47 wallets. Every protocol. Gas > airdrop (don't calculate). Which crypto type are you?" },
+    { emoji:"🍍", name:"The Reclaimed", en:"THE RECLAIMED",
+      quote:"\"FTX had no SFC licence.\nHashKey does.\nI know what position I held before.\nI was wrong.\"",
+      desc:"Used to be the loudest voice against licensed exchanges. After paying tuition, now the loudest voice asking \"do they have an SFC licence?\"",
+      punch:"You're Hawaiian now. Welcome.",
+      shareText:"I'm The Reclaimed 🍍 FTX had no SFC licence. HashKey does. I know what I used to say. Which crypto type are you?" }
+  ]
+};
+
+// ── State ────────────────────────────────────────────────────────
+let lang = 'zh';
+let scores = [0,0,0,0,0];
 let current = 0;
+let resultIdx = -1;
 
+// ── Lang toggle ──────────────────────────────────────────────────
+function toggleLang() {
+  lang = lang === 'zh' ? 'en' : 'zh';
+  applyLang();
+}
+
+function applyLang() {
+  const s = STRINGS[lang];
+  document.documentElement.lang = lang === 'zh' ? 'zh-HK' : 'en';
+  document.getElementById('langToggle').textContent = s.langBtn;
+  document.getElementById('hEyebrow').textContent = s.eyebrow;
+  document.getElementById('hTitle').innerHTML = s.title;
+  document.getElementById('hSub').textContent = s.sub;
+  document.getElementById('rLabel').textContent = s.resultLabel;
+  document.getElementById('btnShare').textContent = s.shareBtn;
+  document.getElementById('btnRestart').textContent = s.restartBtn;
+  document.getElementById('rTag').innerHTML = s.resultTag;
+  document.getElementById('toast').textContent = s.toastMsg;
+
+  // Rebuild questions for current question
+  buildQuestions();
+
+  // If result is showing, re-render it
+  if (resultIdx >= 0) renderResult(resultIdx);
+}
+
+// ── Build questions ──────────────────────────────────────────────
+function buildQuestions() {
+  const s = STRINGS[lang];
+  const container = document.getElementById('questions');
+  container.innerHTML = '';
+
+  for (let q = 0; q < 5; q++) {
+    const card = document.createElement('div');
+    card.className = 'q-card' + (q === current && document.getElementById('result').style.display !== 'block' ? ' visible' : '');
+    // If quiz done, don't show questions
+    if (resultIdx >= 0) card.classList.remove('visible');
+
+    card.innerHTML = `
+      <div class="q-num">${s.qNum[q]}</div>
+      <div class="q-text">${s.questions[q]}</div>
+      <div class="options">
+        ${s.options[q].map((opt, i) =>
+          `<button class="opt" onclick="answer(${q},${i})">${opt}</button>`
+        ).join('')}
+      </div>`;
+    container.appendChild(card);
+  }
+}
+
+// ── Quiz logic ───────────────────────────────────────────────────
 function answer(q, persona) {
   scores[persona]++;
   current++;
   updateProgress();
 
   if (current < 5) {
-    document.getElementById('q' + (current - 1)).classList.remove('visible');
-    document.getElementById('q' + current).classList.add('visible');
+    const cards = document.querySelectorAll('.q-card');
+    cards.forEach(c => c.classList.remove('visible'));
+    cards[current].classList.add('visible');
   } else {
     showResult();
   }
@@ -451,46 +379,46 @@ function updateProgress() {
 }
 
 function showResult() {
-  // Find persona with highest score (tie: pick last/highest index for The Reclaimed bias)
-  let max = -1, idx = 0;
+  let max = -1;
+  resultIdx = 0;
   for (let i = 0; i < 5; i++) {
-    if (scores[i] > max) { max = scores[i]; idx = i; }
+    if (scores[i] > max) { max = scores[i]; resultIdx = i; }
   }
+  renderResult(resultIdx);
+  document.getElementById('questions').style.display = 'none';
+  document.getElementById('headerBlock').style.display = 'none';
+  document.getElementById('progressBar').style.display = 'none';
+  document.getElementById('result').classList.add('visible');
+  window.scrollTo(0, 0);
+}
 
-  const p = PERSONAS[idx];
+function renderResult(idx) {
+  const p = PERSONAS[lang][idx];
   document.getElementById('rEmoji').textContent = p.emoji;
   document.getElementById('rName').textContent = p.name;
   document.getElementById('rEn').textContent = p.en;
   document.getElementById('rQuote').textContent = p.quote;
   document.getElementById('rDesc').textContent = p.desc;
   document.getElementById('rPunch').textContent = p.punch;
-
-  // Store for share
-  document.getElementById('result').dataset.shareText = p.shareText;
-  document.getElementById('result').dataset.personaIdx = idx;
-
-  // Hide quiz, show result
-  document.getElementById('questions').style.display = 'none';
-  document.getElementById('headerBlock').style.display = 'none';
-  document.getElementById('result').classList.add('visible');
-  window.scrollTo(0, 0);
 }
 
+// ── Share ────────────────────────────────────────────────────────
 function shareResult() {
-  const idx = document.getElementById('result').dataset.personaIdx;
-  const p = PERSONAS[idx];
-  const text = p.shareText + '\nhashkey.com/pizza #你係邊款幣圈人 #PizzaDay2026';
+  const p = PERSONAS[lang][resultIdx];
+  const s = STRINGS[lang];
+  const hashtag = lang === 'zh' ? '#你係邊款幣圈人 #PizzaDay2026' : '#CryptoPersona #PizzaDay2026';
+  const text = p.shareText + '\nhashkey.com/pizza ' + hashtag;
   const url = 'https://beltran12138.github.io/hkx/quiz/';
 
   if (navigator.share) {
-    navigator.share({ title: '你係邊款幣圈人？', text: text, url: url })
-      .catch(() => copyFallback(text + '\n' + url));
+    navigator.share({ title: s.shareTitle, text, url }).catch(() => copyFallback(text + '\n' + url));
   } else {
     copyFallback(text + '\n' + url);
   }
 }
 
 function copyFallback(text) {
+  const s = STRINGS[lang];
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(showToast);
   } else {
@@ -506,32 +434,36 @@ function copyFallback(text) {
 
 function showToast() {
   const t = document.getElementById('toast');
+  t.textContent = STRINGS[lang].toastMsg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+// ── Restart ──────────────────────────────────────────────────────
 function restart() {
-  scores = [0, 0, 0, 0, 0];
+  scores = [0,0,0,0,0];
   current = 0;
+  resultIdx = -1;
 
   document.getElementById('questions').style.display = '';
   document.getElementById('headerBlock').style.display = '';
+  document.getElementById('progressBar').style.display = '';
   document.getElementById('result').classList.remove('visible');
 
   for (let i = 0; i < 5; i++) {
-    const c = document.getElementById('q' + i);
-    c.classList.remove('visible');
-    const d = document.getElementById('d' + i);
-    d.className = 'dot';
+    document.getElementById('d' + i).className = 'dot';
   }
-  document.getElementById('q0').classList.add('visible');
   document.getElementById('d0').classList.add('active');
+
+  buildQuestions();
+  document.querySelector('.q-card').classList.add('visible');
   window.scrollTo(0, 0);
 }
 
-// Init
-document.getElementById('q0').classList.add('visible');
+// ── Init ─────────────────────────────────────────────────────────
+buildQuestions();
 document.getElementById('d0').classList.add('active');
+document.querySelector('.q-card').classList.add('visible');
 </script>
 </body>
 </html>
