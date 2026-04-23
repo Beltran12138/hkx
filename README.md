@@ -83,4 +83,4 @@ Most crypto CLI tools are built for offshore exchanges with no regulatory contex
 
 ---
 
-*ZHAO Han (1155191400) · CUHK COMM4150 · Supervisor: Prof. Donna Chu*
+*ZHAO Han (1155191400) · CUHK COMM4150 *
