@@ -1,0 +1,18 @@
+{
+  "name": "hkx",
+  "version": "0.1.0",
+  "description": "HashKey Exchange developer CLI — SFC-compliant crypto tools for AI agents and developers",
+  "keywords": ["hashkey", "crypto", "hong-kong", "sfc", "cli", "agent-skills"],
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "hkx": "./bin/hkx.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Beltran12138/hkx"
+  }
+}
