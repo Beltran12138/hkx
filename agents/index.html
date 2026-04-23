@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hkx Agent Registry — Know Your Agent</title>
+<meta name="description" content="The first SFC-licensed exchange where your AI agent has an identity. Register, verify, and trade within Hong Kong's regulated crypto framework.">
+<style>
+  :root {
+    --bg: #0E0C0B;
+    --surface: #161412;
+    --surface2: #1c1917;
+    --border: #2A2522;
+    --pink: #FF2D78;
+    --cyan: #00D4FF;
+    --orange: #FF4500;
+    --gold: #FFB800;
+    --text: #F0EDE8;
+    --muted: #7A7470;
+    --green: #00E676;
+    --red: #FF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .logo-mark {
+    background: var(--cyan);
+    color: #000;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .logo-sub { color: var(--muted); font-size: 12px; font-weight: 400; }
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .header-nav a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+  .header-nav a:hover { color: var(--text); }
+  .header-nav a.active { color: var(--cyan); }
+  .btn-register {
+    background: var(--cyan);
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-register:hover { opacity: 0.85; }
+
+  /* ── Hero ── */
+  .hero {
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 40px;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .hero-title span { color: var(--cyan); }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 580px;
+    margin-bottom: 24px;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .tag.active { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── KYA Banner ── */
+  .kya-banner {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .kya-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .kya-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+  .kya-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .kya-node.verified { border-color: var(--green); color: var(--green); }
+  .kya-node.agent { border-color: var(--cyan); color: var(--cyan); }
+  .kya-node.exchange { border-color: var(--pink); color: var(--pink); }
+  .kya-arrow { color: var(--muted); font-size: 14px; }
+  .kya-note {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+
+  /* ── Stats ── */
+  .stats-row {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-box {
+    flex: 1;
+    padding: 20px 28px;
+    border-right: 1px solid var(--border);
+  }
+  .stat-box:last-child { border-right: none; }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cyan);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+
+  /* ── Main layout ── */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* ── Registry table ── */
+  .registry-section { border-right: 1px solid var(--border); }
+  .section-header {
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-title { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .section-count { font-size: 11px; color: var(--cyan); }
+
+  .registry-table { width: 100%; border-collapse: collapse; }
+  .registry-table th {
+    text-align: left;
+    padding: 10px 28px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .registry-table td {
+    padding: 14px 28px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .registry-table tr:hover td { background: var(--surface); }
+
+  .agent-id { color: var(--cyan); font-size: 11px; }
+  .agent-type {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+  .principal { color: var(--muted); font-size: 11px; }
+  .principal-verified { color: var(--green); font-size: 10px; margin-top: 2px; }
+
+  .skill-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin: 2px 2px 0 0;
+  }
+
+  .kya-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+  }
+  .kya-status.verified { color: var(--green); }
+  .kya-status.pending { color: var(--gold); }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot.green { background: var(--green); }
+  .dot.gold { background: var(--gold); }
+
+  .reg-date { color: var(--muted); font-size: 11px; }
+
+  /* ── Sidebar ── */
+  .sidebar { padding: 0; }
+  .sidebar-block {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-title {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .how-step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+  .step-num {
+    width: 20px;
+    height: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--cyan);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .step-text { color: var(--muted); line-height: 1.5; font-size: 11px; }
+  .step-text strong { color: var(--text); }
+
+  .compliance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .compliance-item:last-child { border-bottom: none; }
+  .compliance-key { color: var(--muted); }
+  .compliance-val { color: var(--green); }
+  .compliance-val.orange { color: var(--orange); }
+
+  .btn-full {
+    display: block;
+    width: 100%;
+    background: var(--cyan);
+    color: #000;
+    border: none;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .btn-full:hover { opacity: 0.85; }
+  .btn-full.outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .btn-full.outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--cyan); }
+
+  @media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .hero { padding: 32px 20px; }
+    .kya-banner { padding: 16px 20px; gap: 16px; }
+    .main { grid-template-columns: 1fr; }
+    .registry-section { border-right: none; }
+    .sidebar { border-top: 1px solid var(--border); }
+    .stats-row { flex-wrap: wrap; }
+    .stat-box { border-right: none; border-bottom: 1px solid var(--border); min-width: 50%; }
+    footer { padding: 16px 20px; }
+    .registry-table th, .registry-table td { padding: 10px 16px; }
+    .kya-note { display: none; }
+    .header-nav { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="logo">
+    <span class="logo-mark">hkx</span>
+    <span>Agent Registry</span>
+    <span class="logo-sub">/ Know Your Agent</span>
+  </div>
+  <nav class="header-nav">
+    <a href="../">SkillHub</a>
+    <a href="../quiz/">Personas</a>
+    <a href="../rib/">RIB</a>
+    <a href="#" class="active">Agents</a>
+    <a href="https://hashkey.com" target="_blank">hashkey.com ↗</a>
+    <a href="#register" class="btn-register">Register Agent</a>
+  </nav>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <p class="hero-eyebrow">hkx Agent Registry · Hong Kong · SFC-Licensed</p>
+  <h1 class="hero-title">
+    The first licensed exchange<br>
+    where your AI agent has<br>
+    <span>an identity.</span>
+  </h1>
+  <p class="hero-sub">
+    AI agents now execute 58% of global crypto trading volume — with zero regulatory accountability.
+    hkx Agent Registry introduces <strong>Know Your Agent (KYA)</strong>: every autonomous agent
+    operating on HashKey Exchange is bound to a verified human principal,
+    traceable, and compliant with SFC guidelines.
+  </p>
+  <div class="hero-tags">
+    <span class="tag active">SFC Type 1 + Type 7</span>
+    <span class="tag active">KYA-Compliant</span>
+    <span class="tag">agentskills.io standard</span>
+    <span class="tag">Claude Code · Codex · OpenClaw</span>
+    <span class="tag">HKD on-ramp</span>
+  </div>
+</div>
+
+<!-- KYA Flow -->
+<div class="kya-banner">
+  <span class="kya-label">KYA Model</span>
+  <div class="kya-flow">
+    <span class="kya-node verified">Human Principal<br><small>KYC Verified</small></span>
+    <span class="kya-arrow">→</span>
+    <span class="kya-node">SBT Credential<br><small>On-chain identity</small></span>
+    <span class="kya-arrow">→</span>
+    <span class="kya-node agent">Agent Registration<br><small>Linked to principal</small></span>
+    <span class="kya-arrow">→</span>
+    <span class="kya-node">SkillHub Skills<br><small>SFC-reviewed</small></span>
+    <span class="kya-arrow">→</span>
+    <span class="kya-node exchange">HashKey Trading<br><small>Regulated infrastructure</small></span>
+  </div>
+  <p class="kya-note">
+    Every agent action is attributable to its human principal.
+    Regulatory accountability follows the agent, not just the wallet.
+  </p>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-box">
+    <span class="stat-num">247</span>
+    <span class="stat-label">Registered Agents</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">189</span>
+    <span class="stat-label">KYA Verified</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">6</span>
+    <span class="stat-label">SFC-Reviewed Skills</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">HK</span>
+    <span class="stat-label">First SFC-Licensed KYA Registry</span>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Registry Table -->
+  <div class="registry-section">
+    <div class="section-header">
+      <span class="section-title">Live Registry</span>
+      <span class="section-count">247 agents · last updated 2026-04-24</span>
+    </div>
+    <table class="registry-table">
+      <thead>
+        <tr>
+          <th>Agent</th>
+          <th>Principal</th>
+          <th>Skills</th>
+          <th>KYA Status</th>
+          <th>Registered</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="agent-id">agent_0x4a3f…c12e</div>
+            <div><span class="agent-type">DCA Bot</span></div>
+          </td>
+          <td>
+            <div class="principal">principal_0x8b2a…f44d</div>
+            <div class="principal-verified">✓ KYC Verified · HK Resident</div>
+          </td>
+          <td>
+            <span class="skill-tag">hashkey-dca</span>
+            <span class="skill-tag">price-monitor</span>
+          </td>
+          <td><span class="kya-status verified"><span class="dot green"></span>Verified</span></td>
+          <td><span class="reg-date">2026-02-14</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="agent-id">agent_0x9c1b…a87f</div>
+            <div><span class="agent-type">Arbitrage Bot</span></div>
+          </td>
+          <td>
+            <div class="principal">principal_0x3d5e…2bc1</div>
+            <div class="principal-verified">✓ KYC Verified · HK Resident</div>
+          </td>
+          <td>
+            <span class="skill-tag">hashkey-arbitrage</span>
+            <span class="skill-tag">compliance-check</span>
+          </td>
+          <td><span class="kya-status verified"><span class="dot green"></span>Verified</span></td>
+          <td><span class="reg-date">2026-02-28</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="agent-id">agent_0x7e2d…3f90</div>
+            <div><span class="agent-type">Portfolio Rebalancer</span></div>
+          </td>
+          <td>
+            <div class="principal">principal_0x1a4c…9d73</div>
+            <div class="principal-verified">✓ KYC Verified · HK Resident</div>
+          </td>
+          <td>
+            <span class="skill-tag">hashkey-rebalance</span>
+          </td>
+          <td><span class="kya-status verified"><span class="dot green"></span>Verified</span></td>
+          <td><span class="reg-date">2026-03-07</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="agent-id">agent_0x2f8a…b35c</div>
+            <div><span class="agent-type">Alert Bot</span></div>
+          </td>
+          <td>
+            <div class="principal">principal_0x6e9b…0a12</div>
+            <div class="principal-verified">✓ KYC Verified · HK Resident</div>
+          </td>
+          <td>
+            <span class="skill-tag">price-monitor</span>
+            <span class="skill-tag">compliance-check</span>
+          </td>
+          <td><span class="kya-status pending"><span class="dot gold"></span>Pending Review</span></td>
+          <td><span class="reg-date">2026-04-10</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="agent-id">agent_0x5b1c…e67a</div>
+            <div><span class="agent-type">DCA Bot</span></div>
+          </td>
+          <td>
+            <div class="principal">principal_0x4f7d…c29e</div>
+            <div class="principal-verified">✓ KYC Verified · HK Resident</div>
+          </td>
+          <td>
+            <span class="skill-tag">hashkey-dca</span>
+          </td>
+          <td><span class="kya-status verified"><span class="dot green"></span>Verified</span></td>
+          <td><span class="reg-date">2026-03-19</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="agent-id">agent_0x8d4e…17b3</div>
+            <div><span class="agent-type">Grid Trading Bot</span></div>
+          </td>
+          <td>
+            <div class="principal">principal_0x2c8f…a50d</div>
+            <div class="principal-verified">✓ KYC Verified · HK Resident</div>
+          </td>
+          <td>
+            <span class="skill-tag">hashkey-grid</span>
+            <span class="skill-tag">compliance-check</span>
+          </td>
+          <td><span class="kya-status verified"><span class="dot green"></span>Verified</span></td>
+          <td><span class="reg-date">2026-04-01</span></td>
+        </tr>
+        <tr>
+          <td colspan="5" style="text-align:center; padding: 20px; color: var(--muted); font-size: 11px; letter-spacing: 0.06em;">
+            241 more agents · sorted by registration date · <a href="#" style="color: var(--cyan); text-decoration: none;">view all</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="sidebar-block">
+      <p class="sidebar-title">How to Register</p>
+      <div class="how-step">
+        <span class="step-num">1</span>
+        <p class="step-text"><strong>Verify as human principal</strong><br>Complete HashKey KYC. Your verified account becomes the principal identity.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">2</span>
+        <p class="step-text"><strong>Install SkillHub skills</strong><br>Use <code style="color:var(--cyan)">hkx skill install</code> to add SFC-reviewed trading skills to your agent.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">3</span>
+        <p class="step-text"><strong>Submit agent for KYA review</strong><br>Link agent wallet to your principal account. 24–48h review window.</p>
+      </div>
+      <div class="how-step">
+        <span class="step-num">4</span>
+        <p class="step-text"><strong>Trade within SFC parameters</strong><br>Your agent operates within approved asset lists and position limits.</p>
+      </div>
+      <a href="../" class="btn-full" id="register">Browse SkillHub →</a>
+      <a href="https://hashkey.com" class="btn-full outline" target="_blank">Open HashKey Account</a>
+    </div>
+
+    <div class="sidebar-block">
+      <p class="sidebar-title">Compliance Parameters</p>
+      <div class="compliance-item">
+        <span class="compliance-key">Jurisdiction</span>
+        <span class="compliance-val">Hong Kong</span>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-key">SFC Licence</span>
+        <span class="compliance-val">Type 1 + Type 7</span>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-key">KYA Standard</span>
+        <span class="compliance-val">hkx v1.0</span>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-key">Skill Standard</span>
+        <span class="compliance-val">agentskills.io</span>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-key">Agent KYC</span>
+        <span class="compliance-val">Principal-linked</span>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-key">MiCA Ready</span>
+        <span class="compliance-val orange">Monitoring</span>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <p class="sidebar-title">Why KYA Matters</p>
+      <p style="font-size: 11px; color: var(--muted); line-height: 1.7;">
+        AI agents now execute <strong style="color:var(--text)">58%</strong> of global crypto trading volume —
+        with zero regulatory identity.<br><br>
+        MiCA's July 2026 deadline has no provision for autonomous agents as regulated clients.
+        No exchange has solved agent-level accountability.<br><br>
+        hkx Agent Registry is the first attempt to do it right.
+      </p>
+    </div>
+
+  </aside>
+</div>
+
+<!-- Footer -->
+<footer>
+  <span>hkx Agent Registry — HashKey Exchange · SFC Type 1 + Type 7 · 2018–</span>
+  <span>
+    <a href="../">SkillHub</a> ·
+    <a href="../quiz/">Personas Quiz</a> ·
+    <a href="../rib/">Rest in Blockchain</a> ·
+    <a href="https://hashkey.com" target="_blank">hashkey.com ↗</a>
+  </span>
+</footer>
+
+</body>
+</html>
