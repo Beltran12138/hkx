@@ -21,25 +21,51 @@ npm install -g hkx
 ## Commands
 
 ### Price
-```bash
-hkx price btc
-hkx price eth
-hkx price sol
+```
+$ hkx price btc
+
+BTC
+  USD  $78,155
+  HKD  HK$612,133
+  24h  +0.30%
+  Source: CoinGecko · 2026-04-23T06:06:29Z
 ```
 
 ### Compliance
-```bash
-hkx compliance check btc      # APPROVED ✓
-hkx compliance check shib     # NOT LISTED ✗
-hkx compliance list           # All SFC-approved assets
+```
+$ hkx compliance check eth
+
+✓ APPROVED  ETH — Ethereum
+  Pairs    HKD, USD, USDT
+  Type     spot
+  Listed on HashKey Exchange under SFC Type 1 & Type 7 licence.
+
+$ hkx compliance check shib
+
+✗ NOT LISTED  SHIB
+  This asset is not currently listed on HashKey Exchange.
+  SFC approval required before listing.
 ```
 
 ### Skills
-```bash
-hkx skill list
-hkx skill install hashkey-dca
-hkx skill install hashkey-compliance-check
-hkx skill remove hashkey-dca
+```
+$ hkx skill list
+
+HashKey SkillHub — SFC-reviewed agent skills
+
+    available  hashkey-dca                      Dollar-cost averaging within SFC-approved assets
+    available  hashkey-compliance-check         Pre-trade SFC compliance verification
+    available  hashkey-portfolio-rebalance      Rebalance to target allocations (SFC assets only)
+    available  hashkey-market-summary           Daily factual market summary, no price predictions
+    available  hashkey-kyc-status               Check account KYC status before trade execution
+    available  hashkey-hkd-onramp               Initiate HKD fiat deposit flow
+
+Install: hkx skill install <name>
+
+$ hkx skill install hashkey-dca
+
+Installing hashkey-dca... done
+  Saved to ~/.hkx/skills/hashkey-dca.md
 ```
 
 ---
@@ -50,7 +76,7 @@ HashKey SkillHub is the first SFC-framework-compatible agent skills registry for
 
 Skills follow the [agentskills.io](https://agentskills.io) open standard — compatible with Claude Code, Codex, Hermes Agent, and Cursor.
 
-→ [Browse SkillHub](./skillhub/index.html)
+→ [Browse SkillHub](https://beltran12138.github.io/hkx/)
 
 ---
 
