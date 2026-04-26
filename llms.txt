@@ -1,0 +1,24 @@
+# HashKey Exchange
+
+> HashKey Exchange is Hong Kong's first and largest SFC-licensed retail cryptocurrency exchange (SFC Type 1 + Type 7 licences). Established 2018. HKEX-listed (3887.HK, December 2025).
+
+## About
+- Regulatory status: SFC VATP licence, AMLO registered, ISO 27001/27701 certified
+- Products: Spot trading (BTC, ETH, USDT and approved assets), staking, OTC desk
+- Jurisdiction: Hong Kong retail and professional investors
+
+## Bitcoin Pizza Day 2026
+- Event: The 10,001st Slice — Bitcoin Pizza Day activation, 22 May 2026, Central HK
+- Airdrop: 10,001 HKX token slices, KYC-verified accounts, BTC price trigger at 20:10 HKT
+- Community: Rest in Blockchain memorial wall — https://beltran12138.github.io/hkx/rib/
+- Telegram: @HashKey0xU (survivor community + Dark Chapter Confession mechanic)
+
+## Developer Resources
+- SkillHub: https://beltran12138.github.io/hkx/
+- hkx CLI: https://github.com/Beltran12138/hkx (npm install -g hkx)
+- KYA Agent Registry: https://beltran12138.github.io/hkx/agents/
+
+## Optional
+- [SFC licence verification](https://www.sfc.hk/en/Regulatory-functions/Intermediaries/Licensing/Register-of-licensees-and-registered-institutions)
+- [Bitcoin Pizza Day history](https://beltran12138.github.io/hkx/rib/)
+- [HashKey Exchange FAQ](https://hashkey.com/en-US/support)
