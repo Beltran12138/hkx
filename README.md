@@ -1,26 +1,38 @@
-# hkx — HashKey Exchange Developer CLI
+# hkx — "The 10,001st Slice"
+> Bitcoin Pizza Day 2026 · CUHK COMM4150 FYP  
+> *Compliance Can Be Punk.*
 
-> SFC-compliant crypto tools for AI agents and developers.  
-> Part of the **"The 10,001st Slice"** Bitcoin Pizza Day 2026 campaign by HashKey Exchange.
-
+[![Live: Pizza Quiz](https://img.shields.io/badge/Live-Pizza%20Quiz-orange)](https://beltran12138.github.io/hkx/quiz/)
+[![Live: RIB Memorial](https://img.shields.io/badge/Live-RIB%20Memorial-black)](https://beltran12138.github.io/hkx/rib/)
 [![npm](https://img.shields.io/badge/npm-hkx-red)](https://npmjs.com/package/hkx)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![SFC Licensed](https://img.shields.io/badge/Exchange-SFC%20Licensed-green)](https://hashkey.com)
-[![Skills: agentskills.io](https://img.shields.io/badge/Skills-agentskills.io-cyan)](https://agentskills.io)
+[![Research Data](https://img.shields.io/badge/Research-fyp--research--4150-blue)](https://github.com/Beltran12138/-fyp-research-4150)
+
+Campaign deliverables for a proposed IMC repositioning of **HashKey Exchange** (HKEX: 3887.HK) — from "institutional" to "institutional + cool" — anchored to Bitcoin Pizza Day, 22 May 2026.
+
+Research basis: N=287 quantitative survey · NLP social listening (5,000+ interactions) · paired-sample t-test confirming Trust-Engagement Gap Δ=2.52, p<.001.  
+Full methodology → [github.com/Beltran12138/-fyp-research-4150](https://github.com/Beltran12138/-fyp-research-4150)
 
 ---
 
-## Install
+## Live Demos
+
+| Deliverable | Description | Link |
+|---|---|---|
+| **Pizza Personas Quiz** | "Which crypto personality are you?" — SBTI-informed viral quiz, 5 archetypes, bilingual ZH/EN, no dependencies | [🍕 Launch](https://beltran12138.github.io/hkx/quiz/) |
+| **Rest in Blockchain (RIB)** | Community memorial wall for every failed crypto exchange, fund, and protocol — the campaign's provocation engine | [🪦 View](https://beltran12138.github.io/hkx/rib/) |
+| **SkillHub** | SFC-compatible AI agent skills registry for HK licensed exchange | [🔧 Browse](https://beltran12138.github.io/hkx/) |
+
+---
+
+## Developer CLI
 
 ```bash
 npm install -g hkx
 ```
 
----
-
-## Commands
-
 ### Price
+
 ```
 $ hkx price btc
 
@@ -31,7 +43,8 @@ BTC
   Source: CoinGecko · 2026-04-23T06:06:29Z
 ```
 
-### Compliance
+### Compliance Check
+
 ```
 $ hkx compliance check eth
 
@@ -47,7 +60,8 @@ $ hkx compliance check shib
   SFC approval required before listing.
 ```
 
-### Skills
+### SkillHub
+
 ```
 $ hkx skill list
 
@@ -60,53 +74,39 @@ HashKey SkillHub — SFC-reviewed agent skills
     available  hashkey-kyc-status               Check account KYC status before trade execution
     available  hashkey-hkd-onramp               Initiate HKD fiat deposit flow
 
-Install: hkx skill install <name>
-
 $ hkx skill install hashkey-dca
 
 Installing hashkey-dca... done
   Saved to ~/.hkx/skills/hashkey-dca.md
 ```
 
----
-
-## SkillHub
-
-HashKey SkillHub is the first SFC-framework-compatible agent skills registry for Hong Kong retail crypto. Every skill is reviewed against SFC guidelines before listing.
-
 Skills follow the [agentskills.io](https://agentskills.io) open standard — compatible with Claude Code, Codex, Hermes Agent, and Cursor.
-
-→ [Browse SkillHub](https://beltran12138.github.io/hkx/)
-
----
-
-## Available Skills
-
-| Skill | Description | Status |
-|---|---|---|
-| `hashkey-dca` | Dollar-cost averaging within SFC-approved assets | ✅ SFC-reviewed |
-| `hashkey-compliance-check` | Pre-trade SFC compliance verification | ✅ SFC-reviewed |
-| `hashkey-portfolio-rebalance` | Rebalance to target allocations | ✅ SFC-reviewed |
-| `hashkey-market-summary` | Daily factual market summary | ✅ SFC-reviewed |
-| `hashkey-kyc-status` | KYC status check before trade execution | ✅ SFC-reviewed |
-| `hashkey-hkd-onramp` | Initiate HKD fiat deposit flow | ✅ SFC-reviewed |
 
 ---
 
 ## Why hkx?
 
-Most crypto CLI tools are built for offshore exchanges with no regulatory context. `hkx` is built for Hong Kong's licensed exchange infrastructure — every command operates within SFC boundaries by default.
+Most crypto CLI tools are built for offshore exchanges with no regulatory context. `hkx` operates within SFC Type 1 & Type 7 licence boundaries by default — compliance is the default state, not an option.
 
-> "Even your AI needs a license." — HashKey SkillHub
-
----
-
-## Campaign Context
-
-`hkx` is a deliverable of the **COMM4150 FYP "Re-coding Trust"** research project at CUHK, developed as part of the "The 10,001st Slice" PR campaign for HashKey Exchange (Bitcoin Pizza Day, 22 May 2026).
-
-**Tagline:** Compliance Can Be Punk.
+> "Even your AI needs a licence." — HashKey SkillHub
 
 ---
 
-*ZHAO Han (1155191400) · CUHK COMM4150 *
+## Campaign Architecture
+
+This repo covers three of the campaign's seven pillars:
+
+| Pillar | Location | Status |
+|---|---|---|
+| Pizza Personas Quiz | `quiz/` | ✅ Live |
+| Rest in Blockchain (RIB) memorial | `rib/` | ✅ Live |
+| Developer infrastructure (hkx CLI + SkillHub) | `src/` | ✅ npm published |
+| Laszlo Bot (Telegram AI, DeepSeek-V3) | Dify prototype | 🔧 Prototype |
+| Hero Film (60-sec brand film) | — | 📽 Produced |
+| OOH (MTR + DOOH + flyposting) | — | 📐 Mockups |
+| Social content series (RIB thread + TG Confession) | — | 📋 Scripted |
+
+---
+
+*ZHAO Han · CUHK COMM4150 Final Year Project · 2025–2026*  
+*Research methodology → [github.com/Beltran12138/-fyp-research-4150](https://github.com/Beltran12138/-fyp-research-4150)*
